@@ -13,7 +13,7 @@ const displayCategory = (categories) => {
 
     categories.forEach(category => {
         const { category_name, category_id } = category;
-        // console.log(category)
+        //  console.log(category) 
         const li = document.createElement('li');
         li.classList.add('inline-block')
         li.innerHTML = ` <liclass="d-inline-block"><button onclick="loadSingleCategory(${category_id} , '${category_name}')" class="no-background">${category_name}</button> </li>`
@@ -53,7 +53,7 @@ const displayAllCategory = (allNewses, name) => {
     iteamFound.innerHTML = ``;
     const newsLength = newses.length;
     // console.log(newsLength)
-    iteamFound.innerHTML = `<h6 class="bg-white p-3" > ${newsLength} items found for category ${name}</h6> `
+    iteamFound.innerHTML = `<h6 class="bg-white p-4" > <b>${newsLength}</b> items found for category <b>${name}</b></h6> `
 
     const noFound = document.getElementById('no-Found')
     noFound.innerHTML = ``
@@ -68,7 +68,7 @@ const displayAllCategory = (allNewses, name) => {
     cardContainer.innerHTML = ``;
     // console.log(newses);
     newses.forEach(news => {
-        // console.log(news)
+        //  console.log(news)
         const { image_url, title, details, total_view, _id } = news;
         const cardDiv = document.createElement('div');
         cardDiv.innerHTML = `
@@ -95,8 +95,7 @@ const displayAllCategory = (allNewses, name) => {
                     
                         </div>
                         <div class="p-2 text-dark d-none d-md-block">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
+                            <span>${news.rating.number ? news.rating.number :"No Rating"}</span>
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star-half-stroke"></i>
@@ -154,6 +153,10 @@ const displayDetails = (newsDetails) => {
                         <div class="p-2">
                             <i class="fa-regular fa-eye"></i> <span class="px-2">${total_view ? total_view : 'No Data Available'}</span>
                         </div>
+                         <div class="p-2 text-dark">
+                            <span>${newsDetails.rating.number ? newsDetails.rating.number : "No Rating"}</span>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                        </div> 
                     </div>
   </div>
 </div>
