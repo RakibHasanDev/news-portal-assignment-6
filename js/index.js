@@ -1,4 +1,4 @@
-
+//load category
 const loadData = () => {
     const url = "https://openapi.programming-hero.com/api/news/categories"
     fetch(url)
@@ -7,7 +7,7 @@ const loadData = () => {
         .catch(error => console.log(error));
 
 }
-
+// added category 
 const displayCategory = (categories) => {
     const ul = document.getElementById("ul-container");
 
@@ -24,7 +24,7 @@ const displayCategory = (categories) => {
 
 
 }
-
+//load news id and name
 const loadSingleCategory = async (id, name) => {
     // spinner start 
     const spinner = document.getElementById('spinner');
@@ -38,9 +38,13 @@ const loadSingleCategory = async (id, name) => {
 
 }
 
+//sorating data and display
 
 const displayAllCategory = (allNewses, name) => {
     const datas = [...allNewses]
+
+        //shorting data
+
     const newses = datas.sort((a, b) => {
         return b.total_view - a.total_view;
     })
@@ -114,6 +118,7 @@ const displayAllCategory = (allNewses, name) => {
 
 }
 
+//load news details for modal
 const loadDetails = (newsid) => {
 
     const url = `https://openapi.programming-hero.com/api/news/${newsid}`;
