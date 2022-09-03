@@ -1,9 +1,10 @@
 
-const loadData = async () => {
+const loadData = () => {
     const url = "https://openapi.programming-hero.com/api/news/categories"
-    const res = await fetch(url);
-    const data = await res.json();
-    displayCategory(data.data.news_category)
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayCategory(data.data.news_category))
+        .catch(error => console.log(error));
 
 }
 
@@ -14,7 +15,7 @@ const displayCategory = (categories) => {
         const { category_name, category_id } = category;
         // console.log(category)
         const li = document.createElement('li');
-        li.classList.add('d-md-inline-block')
+        li.classList.add('inline-block')
         li.innerHTML = ` <liclass="d-inline-block"><button onclick="loadSingleCategory(${category_id} , '${category_name}')" class="no-background">${category_name}</button> </li>`
         ul.appendChild(li);
 
@@ -30,20 +31,24 @@ const loadSingleCategory = async (id, name) => {
     spinner.classList.remove('d-none')
 
     const url = `https://openapi.programming-hero.com/api/news/category/0${id}`
-    const res = await fetch(url);
-    const data = await res.json();
-    displayAllCategory(data.data, name);
-
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayAllCategory(data.data, name))
+        .catch(error => console.log(error));
 
 }
 
-const displayAllCategory = async (newses, name) => {
 
-
+const displayAllCategory = (allNewses, name) => {
+    const datas = [...allNewses]
+    const newses = datas.sort((a, b) => {
+        return b.total_view - a.total_view;
+    })
+    // console.log(newses);
     const iteamFound = document.getElementById('Category-found');
     iteamFound.innerHTML = ``;
     const newsLength = newses.length;
-    console.log(newsLength)
+    // console.log(newsLength)
     iteamFound.innerHTML = `<h6 class="bg-white p-3" > ${newsLength} items found for category ${name}</h6> `
 
     const noFound = document.getElementById('no-Found')
@@ -55,19 +60,15 @@ const displayAllCategory = async (newses, name) => {
     //spinner stop
     const spinner = document.getElementById('spinner');
     spinner.classList.add('d-none');
-
-
-
-
     const cardContainer = document.getElementById('card-container')
     cardContainer.innerHTML = ``;
     // console.log(newses);
     newses.forEach(news => {
-        console.log(news)
+        // console.log(news)
         const { image_url, title, details, total_view, _id } = news;
         const cardDiv = document.createElement('div');
         cardDiv.innerHTML = `
-        <div class="card mb-3 w-100 my-4" style="min-width: 300px;">
+        <div class="card mb-4 w-100" style="min-width: 300px;">
         <div class="row g-0">
             <div class="col-md-4">
                 <img src="${image_url}" class="img-fluid rounded-start h-100" alt="...">
@@ -113,16 +114,18 @@ const displayAllCategory = async (newses, name) => {
 
 }
 
-const loadDetails = async (newsid) => {
+const loadDetails = (newsid) => {
 
     const url = `https://openapi.programming-hero.com/api/news/${newsid}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    displayDetails(data.data[0])
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayDetails(data.data[0]))
+        .catch(error => console.log(error));
+
 
 }
 
-const displayDetails = async (newsDetails) => {
+const displayDetails = (newsDetails) => {
     // console.log(newsDetails)
     const { thumbnail_url, title, details, total_view } = newsDetails;
     const modalTitle = document.getElementById('seeDetailsModalLabel')
@@ -132,9 +135,9 @@ const displayDetails = async (newsDetails) => {
     const cardDiv = document.createElement('div')
     cardDiv.innerHTML = `
     <div class="card" style="width:100%">
-  <img src="${thumbnail_url}" class="card-img-top w-50 h-50 mx-auto" alt="...">
+  <img src="${thumbnail_url}" class=" modal-img" alt="...">
   <div class="card-body">
-    <p class="card-text">${details.length > 150 ? details.slice(0, 150) + '......' : details }</p>
+    <p class="card-text">${details.length > 150 ? details.slice(0, 150) + '......' : details}</p>
     <div class="d-flex mb-3 align-items-center justify-content-evenly">
                         <div class="p-2">
                             <img class="author-img" src="${newsDetails.author.img}" alt="">
@@ -151,9 +154,11 @@ const displayDetails = async (newsDetails) => {
 </div>
 
     `
-modalBody.appendChild(cardDiv)
-    
+    modalBody.appendChild(cardDiv)
+
 
 }
+
+
 
 loadData();

@@ -5,6 +5,11 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: #c2c2c259;
 }
+
+hr{
+    border: 1px solid black;
+    
+}
 .author-img{
     width: 35px;
     height: 35px;
@@ -13,11 +18,12 @@ body {
 #ul-container{
     list-style-type: none;
 }
-#ul-container li{
-    padding: 5px;
 
-}
 .no-background{
     border:none;
     background-color: Transparent;
+}
+
+.modal-img{
+    height: 250px;
 }
