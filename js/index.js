@@ -9,19 +9,19 @@ const loadData = async () => {
 
 const displayCategory = (categories) => {
     const ul = document.getElementById("ul-container");
-    
+
     categories.forEach(category => {
-        const { category_name, category_id} = category;
+        const { category_name, category_id } = category;
         // console.log(category)
         const li = document.createElement('li');
         li.classList.add('d-md-inline-block')
         li.innerHTML = ` <li onclick="loadSingleCategory(${category_id} , '${category_name}')"class="d-inline-block">${category_name}</li>`
         ul.appendChild(li);
 
-        
+
     })
-    
-    
+
+
 }
 
 const loadSingleCategory = async (id, name) => {
@@ -33,13 +33,13 @@ const loadSingleCategory = async (id, name) => {
     const res = await fetch(url);
     const data = await res.json();
     displayAllCategory(data.data, name);
-    
+
 
 }
 
 const displayAllCategory = async (newses, name) => {
-    
-    
+
+
     const iteamFound = document.getElementById('Category-found');
     iteamFound.innerHTML = ``;
     const newsLength = newses.length;
@@ -49,7 +49,7 @@ const displayAllCategory = async (newses, name) => {
     const noFound = document.getElementById('no-Found')
     noFound.innerHTML = ``
     if (newsLength === 0) {
-        noFound.innerHTML = `<h1 class="bg-white p-3" > No News Found</h1> `
+        noFound.innerHTML = `<h1 class="bg-white p-3 text-center" > No News Found</h1> `
     }
 
     //spinner stop
@@ -57,14 +57,14 @@ const displayAllCategory = async (newses, name) => {
     spinner.classList.add('d-none');
 
 
-   
-    
+
+
     const cardContainer = document.getElementById('card-container')
     cardContainer.innerHTML = ``;
-    console.log(newses);
+    // console.log(newses);
     newses.forEach(news => {
-        // console.log(news)
-        const { image_url, title, details, total_view } = news;
+        console.log(news)
+        const { image_url, title, details, total_view, _id } = news;
         const cardDiv = document.createElement('div');
         cardDiv.innerHTML = `
         <div class="card mb-3 w-100 my-4" style="min-width: 300px;">
@@ -81,23 +81,22 @@ const displayAllCategory = async (newses, name) => {
                             <img class="author-img" src="${news.author.img}" alt="">
                         </div>
                         <div>
-                            <p class="d-inline">${news.author.name ? news.author.name :'No name'}</p> <br>
-                            <p class="d-inline">${news.author.published_date ? news.author.published_date :'No Publish Date' }</p> <br>
+                            <p class="d-inline">${news.author.name ? news.author.name : 'No Data Available'}</p> <br>
+                            <p class="d-inline">${news.author.published_date ? news.author.published_date : 'No Data Available'}</p> <br>
                         </div>
                     
                         <div class="p-2">
-                            <i class="fa-regular fa-eye"></i> <span class="px-2">${total_view ? total_view : 'No View'}</span>
+                            <i class="fa-regular fa-eye"></i> <span class="px-2">${total_view ? total_view : 'No Data Available'}</span>
                     
                         </div>
-                        <div></div>
-                        <div class="p-2 text-dark">
+                        <div class="p-2 text-dark d-none d-md-block">
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-solid fa-star-half-stroke"></i>
                         </div>                  
-                        <button class="btn btn-primary text-white d-block"> See Details</button>
+                        <button onclick="loadDetails('${_id}')"  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#seeDetailsModal">See Details</button>
                     </div>
                    
                 </div>
@@ -106,12 +105,55 @@ const displayAllCategory = async (newses, name) => {
     </div>
         
         `
-        
+
         cardContainer.appendChild(cardDiv)
-        
+
     })
 
+
+}
+
+const loadDetails = async (newsid) => {
+
+    const url = `https://openapi.programming-hero.com/api/news/${newsid}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    displayDetails(data.data[0])
+
+}
+
+const displayDetails = async (newsDetails) => {
+    // console.log(newsDetails)
+    const { thumbnail_url, title, details, total_view } = newsDetails;
+    const modalTitle = document.getElementById('seeDetailsModalLabel')
+    modalTitle.innerHTML = `${title}`
+    const modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = ``;
+    const cardDiv = document.createElement('div')
+    cardDiv.innerHTML = `
+    <div class="card" style="width:100%">
+  <img src="${thumbnail_url}" class="card-img-top w-50 h-50 mx-auto" alt="...">
+  <div class="card-body">
+    <p class="card-text">${details.length > 150 ? details.slice(0, 150) + '......' : details }</p>
+    <div class="d-flex mb-3 align-items-center justify-content-evenly">
+                        <div class="p-2">
+                            <img class="author-img" src="${newsDetails.author.img}" alt="">
+                        </div>
+                        <div>
+                            <p class="d-inline">${newsDetails.author.name ? newsDetails.author.name : 'No Data Available'}</p> <br>
+                            <p class="d-inline">${newsDetails.author.published_date ? newsDetails.author.published_date : 'No Data Available'}</p> <br>
+                        </div>
+                        <div class="p-2">
+                            <i class="fa-regular fa-eye"></i> <span class="px-2">${total_view ? total_view : 'No Data Available'}</span>
+                        </div>
+                    </div>
+  </div>
+</div>
+
+    `
+modalBody.appendChild(cardDiv)
     
+
 }
 
 loadData();
