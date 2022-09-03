@@ -13,3 +13,11 @@ body {
 #ul-container{
     list-style-type: none;
 }
+#ul-container li{
+    padding: 5px;
+
+}
+.no-background{
+    border:none;
+    background-color: Transparent;
+}

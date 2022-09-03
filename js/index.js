@@ -15,7 +15,7 @@ const displayCategory = (categories) => {
         // console.log(category)
         const li = document.createElement('li');
         li.classList.add('d-md-inline-block')
-        li.innerHTML = ` <li onclick="loadSingleCategory(${category_id} , '${category_name}')"class="d-inline-block">${category_name}</li>`
+        li.innerHTML = ` <liclass="d-inline-block"><button onclick="loadSingleCategory(${category_id} , '${category_name}')" class="no-background">${category_name}</button> </li>`
         ul.appendChild(li);
 
 
