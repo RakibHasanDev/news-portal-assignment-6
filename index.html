@@ -23,7 +23,7 @@
         <!-- navbar  -->
         <section class="container">
             
-            <nav class="navbar navbar-expand-lg bg-light  shadow-lg rounded">
+            <nav class="navbar  navbar-expand-lg bg-light  shadow-lg rounded ">
                 <div class="container-fluid">
                     <a class="navbar-brand ps-4 fw-bold" href="#"> <span class="bg-primary text-white p-1 rounded" >BD</span> <span class="text-primary">Times</span></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -40,7 +40,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    <img src="images/top-navbar.png" alt="" width="30" height="30"
+                                    <img src="images/navbar.png" alt="" width="30" height="30"
                                         class="d-inline-block align-text-top">
                                 </a>
                             </li>
@@ -55,12 +55,21 @@
     <main class="container">
 <!-- list iteams  -->
 <section class=" mt-4">
-    <ul id="ul-container" class="d-flex justify-content-evenly">
+    <ul id="ul-container" class="d-md-flex justify-content-evenly text-md-start text-center ">
         <!-- <li onclick="loadCategoryData()" class="d-inline-block">A second item</li> -->
 
     </ul>
 
 </section>
+<section id="spinner" class="d-none">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</section>
+<section id="Category-found"></section>
+<section id="no-Found" class="mt-5"></section>
 
 <section id="card-container" class="card-container my-5">
     <!-- <div class="card mb-3 w-100" style="min-width: 540px;">
@@ -74,7 +83,7 @@
                     <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam eligendi aspernatur cum facilis excepturi officia in accusantium enim ducimus atque?</p>
                     <div class="d-flex mb-3 align-items-center justify-content-evenly">
                         <div class="p-2">
-                            <img class="author-img" src="" alt="">
+                            <img class="author-img" src="https://images.unsplash.com/photo-1633332755192-72…HxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" alt="">
                         </div>
                         <div>
                             <p class="d-inline">Name:</p> <br>
@@ -99,7 +108,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>  -->
 
 
 </section>
